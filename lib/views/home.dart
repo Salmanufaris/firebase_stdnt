@@ -1,9 +1,9 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_student/controller/home_provider.dart';
 import 'package:firebase_student/model/student_model.dart';
 import 'package:firebase_student/views/add.dart';
+import 'package:firebase_student/views/edit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,8 +43,21 @@ class HomeScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                              onPressed: () {}, icon: Icon(Icons.delete)),
-                          IconButton(onPressed: () {}, icon: Icon(Icons.edit))
+                              onPressed: () {
+                                shodeletebox(context, id);
+                              },
+                              icon: const Icon(Icons.delete)),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => EditScreen(
+                                              id: id,
+                                              student: donor,
+                                            )));
+                              },
+                              icon: const Icon(Icons.edit))
                         ],
                       ),
                       title: Text(
@@ -66,6 +79,33 @@ class HomeScreen extends StatelessWidget {
                 context, MaterialPageRoute(builder: (context) => Addscreen()));
           },
           label: const Text("Add")),
+    );
+  }
+
+  Future<void> shodeletebox(BuildContext context, id) async {
+    final pro = Provider.of<Homeprovider>(context, listen: false);
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Choose an option"),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                pro.deleteStudent(id);
+              },
+              child: const Text("Delete"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

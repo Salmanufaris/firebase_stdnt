@@ -14,4 +14,14 @@ class Homeprovider extends ChangeNotifier {
     await _firebaseService.studentref.add(student);
     notifyListeners();
   }
+
+  updateStudent(id, StudentModel student) async {
+    await _firebaseService.studentref.doc(id).update(student.toJson());
+    notifyListeners();
+  }
+
+  deleteStudent(id) async {
+    await _firebaseService.studentref.doc(id).delete();
+    notifyListeners();
+  }
 }
