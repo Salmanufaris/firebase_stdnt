@@ -10,15 +10,18 @@ class Detail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(student.name ?? 'Student Detail'),
-        backgroundColor: Colors.deepPurple, // Set app bar color
+        title: const Text(
+          'Details',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.grey,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Display student details with improved styling
             ListTile(
               title: const Text(
                 "Name",
