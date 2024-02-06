@@ -1,5 +1,6 @@
+import 'package:firebase_student/controller/add_provider.dart';
 import 'package:firebase_student/controller/home_provider.dart';
-import 'package:firebase_student/views/home.dart';
+import 'package:firebase_student/views/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => Homeprovider(),
+          create: (context) => HomeProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AddEditProvider(),
         ),
       ],
       child: MaterialApp(

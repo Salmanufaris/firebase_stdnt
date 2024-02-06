@@ -20,7 +20,7 @@ class Detail extends StatelessWidget {
           children: [
             // Display student details with improved styling
             ListTile(
-              title: Text(
+              title: const Text(
                 "Name",
                 style: TextStyle(
                   fontSize: 18,
@@ -29,14 +29,14 @@ class Detail extends StatelessWidget {
               ),
               subtitle: Text(
                 student.name ?? '',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                 ),
               ),
             ),
             const SizedBox(height: 10),
             ListTile(
-              title: Text(
+              title: const Text(
                 "Age",
                 style: TextStyle(
                   fontSize: 18,
@@ -45,14 +45,14 @@ class Detail extends StatelessWidget {
               ),
               subtitle: Text(
                 student.age ?? '',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                 ),
               ),
             ),
             const SizedBox(height: 10),
             ListTile(
-              title: Text(
+              title: const Text(
                 "Class",
                 style: TextStyle(
                   fontSize: 18,
@@ -61,13 +61,13 @@ class Detail extends StatelessWidget {
               ),
               subtitle: Text(
                 student.classs ?? '',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                 ),
               ),
             ),
             ListTile(
-                title: Text(
+                title: const Text(
                   "Subject",
                   style: TextStyle(
                     fontSize: 18,
@@ -76,7 +76,7 @@ class Detail extends StatelessWidget {
                 ),
                 subtitle: Text(
                   student.subject ?? '',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
                 )),
