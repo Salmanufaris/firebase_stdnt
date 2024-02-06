@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 class Homeprovider extends ChangeNotifier {
   FirebaseService _firebaseService = FirebaseService();
+  String uniquename = DateTime.now().microsecondsSinceEpoch.toString();
+  String downloadurl = '';
 
   Stream<QuerySnapshot<StudentModel>> getData() {
     return _firebaseService.studentref.snapshots();

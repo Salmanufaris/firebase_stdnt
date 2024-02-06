@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_student/controller/home_provider.dart';
 import 'package:firebase_student/model/student_model.dart';
 import 'package:firebase_student/views/add.dart';
+import 'package:firebase_student/views/detail.dart';
 import 'package:firebase_student/views/edit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,37 +37,43 @@ class HomeScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 StudentModel donor = donatorDocs[index].data();
                 final id = donatorDocs[index].id;
-                return Card(
-                  color: Colors.amber,
-                  child: ListTile(
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                shodeletebox(context, id);
-                              },
-                              icon: const Icon(Icons.delete)),
-                          IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => EditScreen(
-                                              id: id,
-                                              student: donor,
-                                            )));
-                              },
-                              icon: const Icon(Icons.edit))
-                        ],
-                      ),
-                      title: Text(
-                        donor.name ?? ''.toUpperCase(),
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                      subtitle: Text(
-                        '${donor.age ?? ''}',
-                      )),
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => Detail(student: donor)));
+                  },
+                  child: Card(
+                    color: Colors.amber,
+                    child: ListTile(
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  shodeletebox(context, id);
+                                },
+                                icon: const Icon(Icons.delete)),
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EditScreen(
+                                                id: id,
+                                                student: donor,
+                                              )));
+                                },
+                                icon: const Icon(Icons.edit))
+                          ],
+                        ),
+                        title: Text(
+                          donor.name ?? ''.toUpperCase(),
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        subtitle: Text(
+                          donor.age ?? '',
+                        )),
+                  ),
                 );
               },
             );

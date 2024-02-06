@@ -9,11 +9,10 @@ class FirebaseService {
 
   FirebaseStorage storage = FirebaseStorage.instance;
   late final CollectionReference<StudentModel> studentref;
+  Reference main = FirebaseStorage.instance.ref();
 
   FirebaseService() {
     studentref =
-        //donor olla collection studentmodel data leavl converted
-
         firestore.collection(collectionref).withConverter<StudentModel>(
               fromFirestore: (snapshot, options) =>
                   StudentModel.fromJson(snapshot.data()!),

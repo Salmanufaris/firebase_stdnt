@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'dart:io';
 import 'package:firebase_student/controller/home_provider.dart';
 import 'package:firebase_student/model/student_model.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ class _EditScreenState extends State<EditScreen> {
   TextEditingController ageController = TextEditingController();
 
   TextEditingController classsController = TextEditingController();
+  TextEditingController subjectController = TextEditingController();
 
   @override
   void initState() {
@@ -42,16 +45,8 @@ class _EditScreenState extends State<EditScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircleAvatar(
-                radius: 70,
-                child: IconButton(
-                    onPressed: () {
-                      _showImageOptions(context);
-                    },
-                    icon: const Icon(Icons.camera)),
-              ),
               const SizedBox(
-                height: 10,
+                height: 70,
               ),
               TextFormField(
                   controller: nameController,
@@ -80,12 +75,19 @@ class _EditScreenState extends State<EditScreen> {
               const SizedBox(
                 height: 10,
               ),
+              TextFormField(
+                  controller: subjectController,
+                  decoration: InputDecoration(
+                      hintText: "Subject",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)))),
+              SizedBox(
+                height: 10,
+              ),
               ElevatedButton(
                   style: const ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll(Colors.amber)),
-                  onPressed: () {
-                    editStudent(context);
-                  },
+                  onPressed: () {},
                   child: const Text("Save"))
             ],
           ),
@@ -94,52 +96,26 @@ class _EditScreenState extends State<EditScreen> {
     );
   }
 
-  editStudent(
-    BuildContext context,
-  ) async {
+  editStudent(BuildContext context, String imageurl) async {
     final pro = Provider.of<Homeprovider>(context, listen: false);
 
     try {
       final editedname = nameController.text;
       final editedage = ageController.text;
       final editclass = classsController.text;
-
-      // Update image URL in Firestore
+      final editsubject = subjectController.text;
 
       final updatedstudent = StudentModel(
-        name: editedname,
-        age: editedage,
-        classs: editclass,
-      );
+          name: editedname,
+          age: editedage,
+          classs: editclass,
+          subject: editsubject);
 
-      // Update student information in Firestore
       pro.updateStudent(widget.id, updatedstudent);
 
       Navigator.pop(context);
     } catch (e) {
-      // Handle exceptions appropriately (e.g., show an error message)
-      print("Error updating student: $e");
+      log("Error updating student: $e");
     }
-  }
-
-  Future<void> _showImageOptions(BuildContext context) async {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Choose an option"),
-          actions: [
-            TextButton(
-              onPressed: () async {},
-              child: const Text("Camera"),
-            ),
-            TextButton(
-              onPressed: () async {},
-              child: const Text("Gallery"),
-            ),
-          ],
-        );
-      },
-    );
   }
 }

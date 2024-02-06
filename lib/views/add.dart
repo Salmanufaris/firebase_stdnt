@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'package:firebase_student/controller/home_provider.dart';
+
 import 'package:firebase_student/model/student_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class Addscreen extends StatelessWidget {
   Addscreen({super.key});
   TextEditingController nameController = TextEditingController();
@@ -11,6 +14,8 @@ class Addscreen extends StatelessWidget {
   TextEditingController ageController = TextEditingController();
 
   TextEditingController classsController = TextEditingController();
+
+  TextEditingController subjectController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,14 +34,6 @@ class Addscreen extends StatelessWidget {
             children: [
               const SizedBox(
                 height: 40,
-              ),
-              CircleAvatar(
-                radius: 70,
-                child: IconButton(
-                    onPressed: () {
-                      _showImageOptions(context);
-                    },
-                    icon: const Icon(Icons.camera)),
               ),
               const SizedBox(
                 height: 20,
@@ -68,6 +65,12 @@ class Addscreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
+              TextFormField(
+                  controller: subjectController,
+                  decoration: InputDecoration(
+                      hintText: "Subject",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20)))),
               MaterialButton(
                   color: Colors.amber,
                   onPressed: () {
@@ -84,36 +87,14 @@ class Addscreen extends StatelessWidget {
 
   void addstudent(BuildContext context) async {
     final pro = Provider.of<Homeprovider>(context, listen: false);
+
     final name = nameController.text;
     final age = ageController.text;
     final classs = classsController.text;
+    final subject = subjectController.text;
 
-    final student = StudentModel(
-      name: name,
-      age: age,
-      classs: classs,
-    );
+    final student =
+        StudentModel(name: name, age: age, classs: classs, subject: subject);
     pro.addStudent(student);
-  }
-
-  Future<void> _showImageOptions(BuildContext context) async {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Choose an option"),
-          actions: [
-            TextButton(
-              onPressed: () async {},
-              child: const Text("Camera"),
-            ),
-            TextButton(
-              onPressed: () async {},
-              child: const Text("Gallery"),
-            ),
-          ],
-        );
-      },
-    );
   }
 }
